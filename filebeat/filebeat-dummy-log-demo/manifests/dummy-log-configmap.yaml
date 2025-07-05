@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dummy-log
+  namespace: logging
+data:
+  log.log: |
+    [INFO] Ollama started successfully
+    [DEBUG] Loading model llama2
+    [INFO] Model loaded
+    [WARN] Prompt too long, truncating
+    [ERROR] Model out of memory

@@ -1,0 +1,27 @@
+  children:
+    opensearch:
+      children:
+        coordinating:
+          hosts:
+            prod_mil-coord1.example.com:
+        master:
+          hosts:
+            prod_mil-master1.example.com:
+        default:
+          hosts:
+            prod_mil-default1.example.com:
+        data:
+          hosts:
+            prod_mil-data1.example.com:
+    logstash:
+      children:
+        consumers:
+          hosts:
+            prod_mil-consumer1.example.com:
+        producers:
+          hosts:
+            prod_mil-producer1.example.com:
+    dashboard:
+      hosts:
+        prod_mil-dashboard1.example.com:
+

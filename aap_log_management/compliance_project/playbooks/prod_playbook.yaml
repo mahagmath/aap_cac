@@ -1,0 +1,11 @@
+---
+- name: Production Environment Playbook
+  hosts: all
+  tasks:
+    - name: Ensure OpenSearch is installed
+      include_role:
+        name: role1
+    - name: Ensure Logstash is configured
+      include_role:
+        name: role2
+

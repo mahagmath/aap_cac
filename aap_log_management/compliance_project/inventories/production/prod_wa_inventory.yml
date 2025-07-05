@@ -1,0 +1,28 @@
+all:
+  children:
+    opensearch:
+      children:
+        coordinating:
+          hosts:
+            prod_wa-coord1.example.com:
+        master:
+          hosts:
+            prod_wa-master1.example.com:
+        default:
+          hosts:
+            prod_wa-default1.example.com:
+        data:
+          hosts:
+            prod_wa-data1.example.com:
+    logstash:
+      children:
+        consumers:
+          hosts:
+            prod_wa-consumer1.example.com:
+        producers:
+          hosts:
+            prod_wa-producer1.example.com:
+    dashboard:
+      hosts:
+        prod_wa-dashboard1.example.com:
+

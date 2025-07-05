@@ -1,0 +1,28 @@
+all:
+  children:
+    opensearch:
+      children:
+        coordinating:
+          hosts:
+            dev1-coord1.example.com:
+        master:
+          hosts:
+            dev1-master1.example.com:
+        default:
+          hosts:
+            dev1-default1.example.com:
+        data:
+          hosts:
+            dev1-data1.example.com:
+    logstash:
+      children:
+        consumers:
+          hosts:
+            dev1-consumer1.example.com:
+        producers:
+          hosts:
+            dev1-producer1.example.com:
+    dashboard:
+      hosts:
+        dev1-dashboard1.example.com:
+

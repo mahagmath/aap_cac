@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: filebeat-dummy
+  namespace: logging
+spec:
+  selector:
+    matchLabels:
+      app: filebeat
+  template:
+    metadata:
+      labels:
+        app: filebeat
+    spec:
+      containers:
+        - name: filebeat
+          image: docker.elastic.co/beats/filebeat:8.13.2
+          args: ["-e", "-c", "/etc/filebeat.yml"]
+          volumeMounts:
+            - name: config
+              mountPath: /etc/filebeat.yml
+              subPath: filebeat.yml
+            - name: dummy-log
+              mountPath: /dummy
+      volumes:
+        - name: config
+          configMap:
+            name: filebeat-config
+        - name: dummy-log
+          configMap:
+            name: dummy-log
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-config
+  namespace: logging
+data:
+  filebeat.yml: |
+    filebeat.inputs:
+      - type: log
+        enabled: true
+        paths:
+          - /dummy/log.log
+
+    output.elasticsearch:
+      hosts: ["http://opensearch.logging.svc.cluster.local:9200"]
+      protocol: "http"
+      ssl.verification_mode: none

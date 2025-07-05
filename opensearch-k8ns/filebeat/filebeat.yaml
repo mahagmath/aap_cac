@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: filebeat
+  namespace: logging
+spec:
+  selector:
+    matchLabels:
+      app: filebeat
+  template:
+    metadata:
+      labels:
+        app: filebeat
+    spec:
+      containers:
+        - name: filebeat
+          image: docker.elastic.co/beats/filebeat:8.13.2
+          args: [
+            "-e",
+            "-c", "/etc/filebeat.yml"
+          ]
+          volumeMounts:
+            - name: config
+              mountPath: /etc/filebeat.yml
+              subPath: filebeat.yml
+         #   - name: ollama-logs
+         #     mountPath: /ollama
+            - name: maclogs
+              mountPath: /maclogs
+      volumes:
+        - name: config
+          configMap:
+            name: filebeat-config
+        - name: maclogs
+          hostPath:
+            path: "/Users/maha/k8s-logs"
+        - name: ollama-logs
+          hostPath:
+            path: "/Users/maha/Library/Application Support/Ollama/logs"
